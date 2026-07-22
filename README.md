@@ -1,17 +1,17 @@
 # Credit Card Fraud Detection
 
-Binary fraud classification on a severely imbalanced dataset (0.17% fraud) — where accuracy is a trap, and the real story is the precision/recall trade-off.
+Binary fraud classification on a severely imbalanced dataset (0.17% fraud). Accuracy is misleading here; the real metric trade-off is precision vs. recall.
 
 ![Precision-recall curve](assets/precision_recall_curve.png)
 
 ## Problem / Motivation
 
-Fraud is rare by nature — in this dataset, only 1 in ~600 transactions. That makes it a genuinely different kind of machine learning problem than a balanced one: a model can score 99.83% "accuracy" while catching zero fraud, ever. This project builds a fraud detector the honest way — starting from why the obvious metric lies, through several ways of correcting for the imbalance, to a deliberate, business-aware decision about where to set the detection threshold.
+Fraud is rare: in this dataset, only 1 in about 600 transactions. That makes it a different kind of classification problem than a balanced one - a model can score 99.83% "accuracy" while catching zero fraud. This project covers why accuracy is the wrong metric here, several ways to correct for the imbalance, and a business-aware decision about where to set the detection threshold.
 
 ## Key Findings
 
 - **A do-nothing model already scores 99.83% accuracy** by always predicting "legitimate" — the starting proof that accuracy alone is meaningless here.
-- **Algorithm choice mattered more than imbalance-handling tricks**: forcing class weights or SMOTE onto logistic regression pushed recall to 87% but collapsed precision to ~5% (F1: 0.10). Switching to a Random Forest reached 95.8% precision *and* 72.6% recall simultaneously (F1: 0.826) — a far better trade-off, from a better model rather than a data trick.
+- **Algorithm choice mattered more than imbalance-handling tricks**: forcing class weights or SMOTE onto logistic regression pushed recall to 87% but collapsed precision to ~5% (F1: 0.10). Switching to a Random Forest reached 95.8% precision *and* 72.6% recall simultaneously (F1: 0.826) - a clear improvement over the 0.10 F1 from class weights or SMOTE, from changing the model rather than the data.
 - **Tuning the decision threshold beat the default 50% cutoff with zero retraining**: the F1-optimal threshold (0.255) reached precision 90.5% / recall 80.0% (F1: 0.849) — catching more real fraud than the default threshold, with only a modest precision cost.
 - **F1-optimal isn't the same as business-optimal**: since missing real fraud typically costs far more than a false alarm, a real deployment would likely accept an even lower threshold than the F1-optimal one — a judgment call the data alone can't make.
 
