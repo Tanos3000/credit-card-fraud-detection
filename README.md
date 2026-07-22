@@ -32,7 +32,7 @@ Fraud is rare: in this dataset, only 1 in about 600 transactions. That makes it 
 05_threshold_tradeoff.ipynb   -> precision-recall curve, F1-optimal threshold, business framing
 ```
 
-`data_prep.py` holds the one shared loading/splitting/scaling function every notebook uses — a stratified train/test split (so both sets keep the same ~0.17% fraud rate) with `Time`/`Amount` scaled to match the already-standardized PCA features.
+`data_prep.py` holds the one shared loading/splitting/scaling function every notebook uses — a stratified train/test split (so both sets keep the same ~0.17% fraud rate) with `Time`/`Amount` scaled to match the already-standardized PCA features. `models.py` holds the shared model training and evaluation functions, so every notebook trains and scores its model the same way instead of duplicating that code.
 
 ## Getting Started
 
